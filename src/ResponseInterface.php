@@ -86,5 +86,5 @@ interface ResponseInterface
      * @author          David Lienhard <github@lienhard.win>
      * @copyright       David Lienhard
      */
-    public function getBody() : string|bool;
+    public function getBody() : string;
 }
