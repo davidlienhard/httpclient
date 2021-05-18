@@ -3,7 +3,7 @@
     "license": ["MIT"],
     "description": "🐘 php library to make http requests",
     "keywords": [ "http", "php", "library" ],
-    "type": "libary",
+    "type": "library",
     "homepage": "https://github.com/davidlienhard/httpclient/",
     "authors": [
         {
