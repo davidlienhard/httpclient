@@ -27,8 +27,8 @@ use DavidLienhard\HttpClient\Client;
 $http = new Client;
 $response = $http->get("https://test.com/");
 
-echo $response->getStatusCode() === 200
-    ? "request was successful";
+echo $response->getHttpCode() === 200
+    ? "request was successful"
     : "request failed";
 ```
 
@@ -42,8 +42,8 @@ $request = (new Request)->verifySslPeer(false);
 $http = new Client($request);
 $response = $http->get("https://test.com/");
 
-echo $response->getStatusCode() === 200
-    ? "request was successful";
+echo $response->getHttpCode() === 200
+    ? "request was successful"
     : "request failed";
 ```
 
@@ -62,8 +62,8 @@ $cookiejar = new CookieJar(
 $http = new Client(cookiejar: $cookiejar);
 $response = $http->get("https://test.com/");
 
-echo $response->getStatusCode() === 200
-    ? "request was successful";
+echo $response->getHttpCode() === 200
+    ? "request was successful"
     : "request failed";
 ```
 
