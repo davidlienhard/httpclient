@@ -1,0 +1,48 @@
+{
+    "name": "davidlienhard/httpclient",
+    "license": ["MIT"],
+    "description": "🐘 php library to make http requests",
+    "keywords": [ "http", "php", "library" ],
+    "type": "libary",
+    "homepage": "https://github.com/davidlienhard/httpclient/",
+    "authors": [
+        {
+            "name": "David Lienhard",
+            "email": "github@lienhard.win",
+            "homepage": "http://www.lienhard.win/",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/davidlienhard/httpclient/issues/",
+        "email": "github@lienhard.win"
+    },
+    "require": {
+        "php": "^8.0",
+        "ext-curl": "^8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9",
+        "squizlabs/php_codesniffer": "^3",
+        "phpstan/phpstan": "^0",
+        "davidlienhard/coding-standard": "^1"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
+    "scripts": {
+        "changed-files": "git diff --name-only origin/master",
+        "phpunit": "./vendor/bin/phpunit",
+        "phpcs": "./vendor/bin/phpcs",
+        "phpcs-diff": "@composer changed-files | xargs ls -d 2>/dev/null | xargs ./vendor/bin/phpcs",
+        "phpstan": "./vendor/bin/phpstan analyse",
+        "coverage": "docker run --rm -v${PWD}:/srv/app ghcr.io/davidlienhard/tourbase-coverage",
+        "test": [
+            "@phpunit",
+            "@phpcs",
+            "@phpstan"
+        ]
+    }
+}

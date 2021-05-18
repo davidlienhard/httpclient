@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<ruleset name="tourBase coding standard">
+    <description>tourBase coding standard</description>
+
+    <!-- inherit rules -->
+    <rule ref="DavidLienhard" />
+
+    <!-- Paths to check -->
+    <file>src</file>
+    <file>tests</file>
+
+    <!-- folders / files to exclude -->
+    <exclude-pattern>vendor/*</exclude-pattern>
+</ruleset>
