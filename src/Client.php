@@ -10,6 +10,9 @@ declare(strict_types=1);
 
 namespace DavidLienhard\HttpClient;
 
+use DavidLienhard\HttpClient\Exceptions\NoResponse as NoResponseException;
+use DavidLienhard\HttpClient\Exceptions\Setup as SetupException;
+
 /**
  * class to send http requests to remote servers
  *
@@ -151,7 +154,7 @@ class Client implements ClientInterface
             $error = \curl_error($this->ch);
             $errno = \curl_errno($this->ch);
             \curl_close($this->ch);
-            throw new \Exception("could not set curl options: ".$error." (".$errno.")");
+            throw new SetupException("could not set curl options: ".$error." (".$errno.")");
         }
 
         $response = \curl_exec($this->ch);
@@ -162,7 +165,7 @@ class Client implements ClientInterface
             $error = \curl_error($this->ch);
             $errno = \curl_errno($this->ch);
             \curl_close($this->ch);
-            throw new \Exception("could not send data to the remote url: ".$error." (".$errno.")");
+            throw new NoResponseException("could not send data to the remote url: ".$error." (".$errno.")");
         }
 
 
