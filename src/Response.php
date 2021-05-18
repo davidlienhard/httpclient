@@ -102,8 +102,8 @@ class Response implements ResponseInterface
      * @author          David Lienhard <github@lienhard.win>
      * @copyright       David Lienhard
      */
-    public function getBody() : string|bool
+    public function getBody() : string
     {
-        return $this->body;
+        return \is_string($this->body) ? $this->body : "";
     }
 }
