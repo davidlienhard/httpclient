@@ -304,4 +304,35 @@ class ClientTestCase extends TestCase
         $this->assertInstanceOf(Response::class, $response);
         $this->assertInstanceOf(ResponseInterface::class, $response);
     }
+
+    /**
+     * @covers DavidLienhard\HttpClient\Client
+     * @test
+     */
+    public function testCanSetRequestOnGetFunction(): void
+    {
+        $request = $this->createMock(Request::class);
+        $request->method("getOptions")->willReturn([ CURLOPT_SSL_VERIFYPEER => false ]);
+        $curl = $this->createMock(Curl::class);
+
+        // return true if key is set to value
+        $curl->method('setoptArray')
+            ->will($this->returnCallback(fn ($options) => ($options[CURLOPT_SSL_VERIFYPEER] ?? null) === false));
+
+        $curl->method("getinfo")->will($this->returnValueMap(
+            [
+                [ CURLINFO_RESPONSE_CODE, 200 ],
+                [ CURLINFO_CONTENT_TYPE, "text/plain" ],
+                [ null, [] ]
+            ]
+        ));
+        $curl->method("exec")->willReturn(true);
+
+        $client = new Client(curl: $curl);
+
+        $response = $client->get("https://www.google.ch", request: $request);
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+    }
 }
