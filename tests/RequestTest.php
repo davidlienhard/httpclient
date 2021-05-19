@@ -165,6 +165,30 @@ class RequestTestCase extends TestCase
      * @covers DavidLienhard\HttpClient\Request
      * @test
      */
+    public function testCannotSetOutfileToString(): void
+    {
+        $request = new Request;
+
+        $this->expectException(\InvalidArgumentException::class);
+        $request->setOutfile("test");
+    }
+
+    /**
+     * @covers DavidLienhard\HttpClient\Request
+     * @test
+     */
+    public function testCannotSetOutfileToResourceOtherThanStream(): void
+    {
+        $request = new Request;
+
+        $this->expectException(\InvalidArgumentException::class);
+        $request->setOutfile(\curl_init());
+    }
+
+    /**
+     * @covers DavidLienhard\HttpClient\Request
+     * @test
+     */
     public function testCanSetOutfileToFilehandle(): void
     {
         $request = new Request;
