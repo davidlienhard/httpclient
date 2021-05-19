@@ -66,18 +66,19 @@ class Client implements ClientInterface
      *
      * @author          David Lienhard <github@lienhard.win>
      * @copyright       David Lienhard
-     * @param           string          $url            url to send the request to. may also have query parameters
-     * @param           array           $data           data to send. can also be given as query parameters in url
-     * @param           array           $headers        additional headers to send to the remote server
-     * @return          ResponseInterface               response object containing data returned from the server
+     * @param           string                  $url        url to send the request to. may also have query parameters
+     * @param           array                   $data       data to send. can also be given as query parameters in url
+     * @param           array                   $headers    additional headers to send to the remote server
+     * @param           RequestInterface|null   $request    request object to use for this request only
+     * @return          ResponseInterface                   response object containing data returned from the server
      */
-    public function get(string $url, array $data = [], array $headers = []) : ResponseInterface
+    public function get(string $url, array $data = [], array $headers = [], RequestInterface|null $request = null) : ResponseInterface
     {
         $url = Helpers::parseUrl($url, $data);
 
         $options = [ CURLOPT_URL => $url ];
 
-        return $this->sendRequest($headers, $options);
+        return $this->sendRequest($headers, $options, $request);
     }
 
     /**
@@ -85,12 +86,13 @@ class Client implements ClientInterface
      *
      * @author          David Lienhard <github@lienhard.win>
      * @copyright       David Lienhard
-     * @param           string          $url            url to send the request to. may also have query parameters
-     * @param           string          $data           data to send. can also be given as query parameters in url
-     * @param           array           $headers        additional headers to send to the remote server
-     * @return          ResponseInterface               response object containing data returned from the server
+     * @param           string                  $url        url to send the request to. may also have query parameters
+     * @param           string                  $data       data to send. can also be given as query parameters in url
+     * @param           array                   $headers    additional headers to send to the remote server
+     * @param           RequestInterface|null   $request    request object to use for this request only
+     * @return          ResponseInterface                   response object containing data returned from the server
      */
-    public function post(string $url, string $data = "", array $headers = []) : ResponseInterface
+    public function post(string $url, string $data = "", array $headers = [], RequestInterface|null $request = null) : ResponseInterface
     {
         $options = [
             CURLOPT_URL        => $url,
@@ -98,7 +100,7 @@ class Client implements ClientInterface
             CURLOPT_POSTFIELDS => $data
         ];
 
-        return $this->sendRequest($headers, $options);
+        return $this->sendRequest($headers, $options, $request);
     }
 
 
@@ -107,12 +109,13 @@ class Client implements ClientInterface
      *
      * @author          David Lienhard <github@lienhard.win>
      * @copyright       David Lienhard
-     * @param           string          $url            url to send the request to. may also have query parameters
-     * @param           array           $data           data to send. can also be given as query parameters in url
-     * @param           array           $headers        additional headers to send to the remote server
-     * @return          ResponseInterface               response object containing data returned from the server
+     * @param           string                  $url        url to send the request to. may also have query parameters
+     * @param           array                   $data       data to send. can also be given as query parameters in url
+     * @param           array                   $headers    additional headers to send to the remote server
+     * @param           RequestInterface|null   $request    request object to use for this request only
+     * @return          ResponseInterface                   response object containing data returned from the server
      */
-    public function delete(string $url, array $data = [], array $headers = []) : ResponseInterface
+    public function delete(string $url, array $data = [], array $headers = [], RequestInterface|null $request = null) : ResponseInterface
     {
         $url = Helpers::parseUrl($url, $data);
 
@@ -121,7 +124,7 @@ class Client implements ClientInterface
             CURLOPT_CUSTOMREQUEST => "DELETE"
         ];
 
-        return $this->sendRequest($headers, $options);
+        return $this->sendRequest($headers, $options, $request);
     }
 
     /**
@@ -129,13 +132,15 @@ class Client implements ClientInterface
      *
      * @author          David Lienhard <github@lienhard.win>
      * @copyright       David Lienhard
-     * @param           array           $requestHeaders additional headers to send to the remote server
-     * @param           array           $options        curl options to use
-     * @return          ResponseInterface               body of the returned data
+     * @param           array                   $requestHeaders additional headers to send to the remote server
+     * @param           array                   $options        curl options to use
+     * @param           RequestInterface|null   $request        request object to use for this request only
+     * @return          ResponseInterface                       body of the returned data
      */
-    private function sendRequest(array $requestHeaders, array $options) : ResponseInterface
+    private function sendRequest(array $requestHeaders, array $options, RequestInterface|null $request) : ResponseInterface
     {
-        $options = $this->request->getOptions() + $options;
+        $requestToUse = $request ?? $this->request;
+        $options = $requestToUse->getOptions() + $options;
 
         if (count($requestHeaders) > 0) {
             $options[CURLOPT_HTTPHEADER] = $requestHeaders;
