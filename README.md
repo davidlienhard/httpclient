@@ -69,4 +69,4 @@ echo $response->getHttpCode() === 200
 
 ## License
 
-The MIT License (MIT). Please see [LICENSE](https://github.com/thephpleague/oauth2-client/blob/master/LICENSE) for more information.
+The MIT License (MIT). Please see [LICENSE](https://github.com/davidlienhard/httpclient/blob/master/LICENSE) for more information.
