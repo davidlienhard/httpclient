@@ -36,24 +36,26 @@ interface ClientInterface
      *
      * @author          David Lienhard <github@lienhard.win>
      * @copyright       David Lienhard
-     * @param           string          $url            url to send the request to. may also have query parameters
-     * @param           array           $data           data to send. can also be given as query parameters in url
-     * @param           array           $headers        additional headers to send to the remote server
-     * @return          ResponseInterface               response object containing data returned from the server
+     * @param           string                  $url        url to send the request to. may also have query parameters
+     * @param           array                   $data       data to send. can also be given as query parameters in url
+     * @param           array                   $headers    additional headers to send to the remote server
+     * @param           RequestInterface|null   $request    request object to use for this request only
+     * @return          ResponseInterface                   response object containing data returned from the server
      */
-    public function get(string $url, array $data = [], array $headers = []) : ResponseInterface;
+    public function get(string $url, array $data = [], array $headers = [], RequestInterface|null $request = null) : ResponseInterface;
 
     /**
      * sends a post request to the url and parses the response
      *
      * @author          David Lienhard <github@lienhard.win>
      * @copyright       David Lienhard
-     * @param           string          $url            url to send the request to. may also have query parameters
-     * @param           string          $data           data to send. can also be given as query parameters in url
-     * @param           array           $headers        additional headers to send to the remote server
-     * @return          ResponseInterface               response object containing data returned from the server
+     * @param           string                  $url        url to send the request to. may also have query parameters
+     * @param           string                  $data       data to send. can also be given as query parameters in url
+     * @param           array                   $headers    additional headers to send to the remote server
+     * @param           RequestInterface|null   $request    request object to use for this request only
+     * @return          ResponseInterface                   response object containing data returned from the server
      */
-    public function post(string $url, string $data = "", array $headers = []) : ResponseInterface;
+    public function post(string $url, string $data = "", array $headers = [], RequestInterface|null $request = null) : ResponseInterface;
 
 
     /**
@@ -61,10 +63,11 @@ interface ClientInterface
      *
      * @author          David Lienhard <github@lienhard.win>
      * @copyright       David Lienhard
-     * @param           string          $url            url to send the request to. may also have query parameters
-     * @param           array           $data           data to send. can also be given as query parameters in url
-     * @param           array           $headers        additional headers to send to the remote server
-     * @return          ResponseInterface               response object containing data returned from the server
+     * @param           string                  $url        url to send the request to. may also have query parameters
+     * @param           array                   $data       data to send. can also be given as query parameters in url
+     * @param           array                   $headers    additional headers to send to the remote server
+     * @param           RequestInterface|null   $request    request object to use for this request only
+     * @return          ResponseInterface                   response object containing data returned from the server
      */
-    public function delete(string $url, array $data = [], array $headers = []) : ResponseInterface;
+    public function delete(string $url, array $data = [], array $headers = [], RequestInterface|null $request = null) : ResponseInterface;
 }
