@@ -140,7 +140,7 @@ class Request implements RequestInterface
      * @author          David Lienhard <github@lienhard.win>
      * @copyright       David Lienhard
      */
-    public function getWriteFunction() : mixed
+    public function getWriteFunction() : callable|null
     {
         return $this->writeFunction;
     }
