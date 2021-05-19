@@ -5,7 +5,7 @@
 [![Source Code](https://img.shields.io/badge/source-davidlienhard/httpclient-blue.svg?style=flat-square)](https://github.com/davidlienhard/httpclient)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/davidlienhard/httpclient/blob/master/LICENSE)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.0-8892BF.svg?style=flat-square)](https://php.net/)
-[![CI Status](https://github.com/davidlienhard/smeraldoPricebox/actions/workflows/check.yml/badge.svg)](https://github.com/davidlienhard/smeraldoPricebox/actions/workflows/check.yml)
+[![CI Status](https://github.com/davidlienhard/httpclient/actions/workflows/check.yml/badge.svg)](https://github.com/davidlienhard/httpclient/actions/workflows/check.yml)
 
 ## Setup
 
