@@ -22,7 +22,7 @@ use DavidLienhard\HttpClient\Exceptions\Setup as SetupException;
 class Client implements ClientInterface
 {
     /** curl handle to use for the connection */
-    private \CurlHandle $ch;
+    private Curl $curl;
 
     /** configuration of the request */
     private RequestInterface $request;
@@ -40,10 +40,9 @@ class Client implements ClientInterface
      */
     public function __construct(
         RequestInterface|null $request = null,
-        CookieJarInterface|null $cookieJar = null
+        CookieJarInterface|null $cookieJar = null,
+        Curl $curl = null,
     ) {
-        $this->ch = \curl_init();
-
         if ($request === null) {
             $request = new Request;
         }
@@ -53,6 +52,13 @@ class Client implements ClientInterface
             $cookieJar = new CookieJar;
         }
         $this->cookieJar = $cookieJar;
+
+        if ($curl === null) {
+            $curl = new Curl;
+        }
+        $this->curl = $curl;
+
+        $this->curl->init();
     }
 
     /**
@@ -150,29 +156,29 @@ class Client implements ClientInterface
         }
 
 
-        if (\curl_setopt_array($this->ch, $options) === false) {
-            $error = \curl_error($this->ch);
-            $errno = \curl_errno($this->ch);
-            \curl_close($this->ch);
+        if ($this->curl->setoptArray($options) === false) {
+            $error = $this->curl->error();
+            $errno = $this->curl->errno();
+            $this->curl->close();
             throw new SetupException("could not set curl options: ".$error." (".$errno.")");
         }
 
-        $response = \curl_exec($this->ch);
+        $response = $this->curl->exec();
 
         $responseHeaders = \implode("\n", $responseHeaders);
 
         if ($response === false) {
-            $error = \curl_error($this->ch);
-            $errno = \curl_errno($this->ch);
-            \curl_close($this->ch);
+            $error = $this->curl->error();
+            $errno = $this->curl->errno();
+            $this->curl->close();
             throw new NoResponseException("could not send data to the remote url: ".$error." (".$errno.")");
         }
 
 
-        $httpCode = \curl_getinfo($this->ch, CURLINFO_RESPONSE_CODE);
-        $contentType = \curl_getinfo($this->ch, CURLINFO_CONTENT_TYPE);
+        $httpCode = $this->curl->getinfo(CURLINFO_RESPONSE_CODE);
+        $contentType = $this->curl->getinfo(CURLINFO_CONTENT_TYPE);
         $contentType = \is_string($contentType) ? $contentType : "";
-        $info = \curl_getinfo($this->ch);
+        $info = $this->curl->getinfo();
         $info = $info !== false ? $info : [];
 
         $responseHeaders = Helpers::parseHeaders($responseHeaders);
@@ -181,7 +187,7 @@ class Client implements ClientInterface
 
         $response = new Response($httpCode, $contentType, $info, $responseHeaders, $this->cookieJar, $body);
 
-        \curl_close($this->ch);
+        $this->curl->close();
 
         return $response;
     }
