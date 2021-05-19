@@ -155,6 +155,10 @@ class Request implements RequestInterface
      */
     public function setOutfile(mixed $outfile) : self
     {
+        if ((!\is_resource($outfile) || \get_resource_type($outfile) !== "stream") && $outfile !== null) {
+            throw new \InvalidArgumentException("outfile must be of type file-pointer");
+        }
+
         $this->outfile = $outfile;
         return $this;
     }
