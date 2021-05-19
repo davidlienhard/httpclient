@@ -78,12 +78,13 @@ class CookieJar implements CookieJarInterface
      */
     public function getAsString() : string
     {
-        $cookies = "";
+        $cookieArray = array_map(
+            fn ($cookie) => $cookie->getName()."=".$cookie->getValue().";",
+            $this->cookies
+        );
 
-        foreach ($this->cookies as $cookie) {
-            $cookies .= $cookie->getName()."=".$cookie->getValue().";";
-        }
+        $cookieString = implode("", $cookieArray);
 
-        return $cookies;
+        return $cookieString;
     }
 }
