@@ -57,8 +57,6 @@ class Client implements ClientInterface
             $curl = new Curl;
         }
         $this->curl = $curl;
-
-        $this->curl->init();
     }
 
     /**
@@ -139,6 +137,8 @@ class Client implements ClientInterface
      */
     private function sendRequest(array $requestHeaders, array $options, RequestInterface|null $request) : ResponseInterface
     {
+        $this->curl->init();
+
         $requestToUse = $request ?? $this->request;
         $options = $requestToUse->getOptions() + $options;
 
