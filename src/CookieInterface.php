@@ -1,12 +1,11 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * interface for the cookie object
  *
  * @author          David Lienhard <github@lienhard.win>
  * @copyright       David Lienhard
  */
-
-declare(strict_types=1);
 
 namespace DavidLienhard\HttpClient;
 

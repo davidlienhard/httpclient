@@ -1,12 +1,11 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * contains the http client curl exception
  *
  * @author          David Lienhard <github@lienhard.win>
  * @copyright       David Lienhard
  */
-
-declare(strict_types=1);
 
 namespace DavidLienhard\HttpClient\Exceptions;
 

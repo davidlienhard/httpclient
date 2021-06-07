@@ -21,7 +21,8 @@ composer require davidlienhard/httpclient
 
 ### Simple Example
 ```php
-<?php
+<?php declare(strict_types=1);
+
 use DavidLienhard\HttpClient\Client;
 
 $http = new Client;
@@ -34,7 +35,8 @@ echo $response->getHttpCode() === 200
 
 ### Do not verify SSL Cert
 ```php
-<?php
+<?php declare(strict_types=1);
+
 use DavidLienhard\HttpClient\Client;
 use DavidLienhard\HttpClient\Request;
 
@@ -49,7 +51,8 @@ echo $response->getHttpCode() === 200
 
 ### Add Cookies
 ```php
-<?php
+<?php declare(strict_types=1);
+
 use DavidLienhard\HttpClient\Client;
 use DavidLienhard\HttpClient\Cookie;
 use DavidLienhard\HttpClient\CookieJar;
