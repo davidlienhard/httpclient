@@ -179,15 +179,15 @@ class Client implements ClientInterface
         }
 
 
-        $httpCode = $this->curl->getinfo(CURLINFO_RESPONSE_CODE);
+        $httpCode = intval($this->curl->getinfo(CURLINFO_RESPONSE_CODE));
         $contentType = $this->curl->getinfo(CURLINFO_CONTENT_TYPE);
         $contentType = \is_string($contentType) ? $contentType : "";
         $info = $this->curl->getinfo();
-        $info = $info !== false ? $info : [];
+        $info = $info !== false && is_array($info) ? $info : [];
 
         $responseHeaders = Helpers::parseHeaders($responseHeaders);
         $this->cookieJar = Helpers::parseCookies($this->cookieJar, $responseHeaders);
-        $body = $response;
+        $body = strval($response);
 
         $response = new Response($httpCode, $contentType, $info, $responseHeaders, $this->cookieJar, $body);
 
