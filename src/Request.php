@@ -141,6 +141,10 @@ class Request implements RequestInterface
      */
     public function getWriteFunction() : callable|null
     {
+        if (!is_callable($this->writeFunction) && !is_null($this->writeFunction)) {
+            throw new HttpClientException("write function is of invalid type '".gettype($this->writeFunction)."'");
+        }
+
         return $this->writeFunction;
     }
 
