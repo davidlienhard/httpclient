@@ -9,6 +9,8 @@
 
 namespace DavidLienhard\HttpClient;
 
+use DavidLienhard\HttpClient\Exceptions\HttpClient as HttpClientException;
+
 /**
  * class to set options for the request to send
  *
