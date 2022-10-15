@@ -67,7 +67,7 @@ class Helpers
         $headers = [];
         $key = "";
 
-        foreach (\explode("\n", $rawHeaders) as $i => $h) {
+        foreach (\explode("\n", $rawHeaders) as $h) {
             $h = \explode(":", $h, 2);
 
             if (isset($h[1])) {
