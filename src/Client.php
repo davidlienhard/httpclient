@@ -40,7 +40,7 @@ class Client implements ClientInterface
     public function __construct(
         RequestInterface|null $request = null,
         CookieJarInterface|null $cookieJar = null,
-        Curl $curl = null,
+        Curl|null $curl = null,
     ) {
         if ($request === null) {
             $request = new Request;
