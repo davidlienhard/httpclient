@@ -1,9 +1,11 @@
 
 parameters:
-    level: max
+    level: 8
 
     paths:
         - src
 
     treatPhpDocTypesAsCertain: false
-    checkMissingIterableValueType: false
+    ignoreErrors:
+        -
+            identifier: missingType.iterableValue
