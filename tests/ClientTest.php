@@ -13,14 +13,14 @@ use DavidLienhard\HttpClient\Exceptions\Setup as SetupException;
 use DavidLienhard\HttpClient\Request;
 use DavidLienhard\HttpClient\Response;
 use DavidLienhard\HttpClient\ResponseInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-class ClientTestCase extends TestCase
+#[CoversClass(Client::class)]
+class ClientTest extends TestCase
 {
-    /**
-     * @covers DavidLienhard\HttpClient\Client
-     * @test
-     */
+    #[Test]
     public function testCanBeCreated(): void
     {
         $client = new Client;
@@ -29,10 +29,7 @@ class ClientTestCase extends TestCase
         $this->assertInstanceOf(ClientInterface::class, $client);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Client
-     * @test
-     */
+    #[Test]
     public function testCanBeCreatedWithRequest(): void
     {
         $request = $this->createMock(Request::class);
@@ -42,10 +39,7 @@ class ClientTestCase extends TestCase
         $this->assertInstanceOf(ClientInterface::class, $client);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Client
-     * @test
-     */
+    #[Test]
     public function testCanBeCreatedWithRequestAndCookieJar(): void
     {
         $request = $this->createMock(Request::class);
@@ -57,10 +51,7 @@ class ClientTestCase extends TestCase
         $this->assertInstanceOf(ClientInterface::class, $client);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Client
-     * @test
-     */
+    #[Test]
     public function testCanBeCreatedWithCurl(): void
     {
         $curl = $this->createMock(Curl::class);
@@ -71,21 +62,18 @@ class ClientTestCase extends TestCase
         $this->assertInstanceOf(ClientInterface::class, $client);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Client
-     * @test
-     */
+    #[Test]
     public function testCanSendGetRequest(): void
     {
         $curl = $this->createMock(Curl::class);
         $curl->method("setoptArray")->willReturn(true);
-        $curl->method("getinfo")->will($this->returnValueMap(
+        $curl->method("getinfo")->willReturnMap(
             [
                 [ CURLINFO_RESPONSE_CODE, 200 ],
                 [ CURLINFO_CONTENT_TYPE, "text/plain" ],
                 [ null, [] ]
             ]
-        ));
+        );
         $curl->method("exec")->willReturn("test-body");
 
         $client = new Client(curl: $curl);
@@ -95,21 +83,18 @@ class ClientTestCase extends TestCase
         $this->assertInstanceOf(ResponseInterface::class, $response);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Client
-     * @test
-     */
+    #[Test]
     public function testCanSendPostRequest(): void
     {
         $curl = $this->createMock(Curl::class);
         $curl->method("setoptArray")->willReturn(true);
-        $curl->method("getinfo")->will($this->returnValueMap(
+        $curl->method("getinfo")->willReturnMap(
             [
                 [ CURLINFO_RESPONSE_CODE, 200 ],
                 [ CURLINFO_CONTENT_TYPE, "text/plain" ],
                 [ null, [] ]
             ]
-        ));
+        );
         $curl->method("exec")->willReturn("test-body");
 
         $client = new Client(curl: $curl);
@@ -119,21 +104,18 @@ class ClientTestCase extends TestCase
         $this->assertInstanceOf(ResponseInterface::class, $response);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Client
-     * @test
-     */
+    #[Test]
     public function testCanSendDeleteRequest(): void
     {
         $curl = $this->createMock(Curl::class);
         $curl->method("setoptArray")->willReturn(true);
-        $curl->method("getinfo")->will($this->returnValueMap(
+        $curl->method("getinfo")->willReturnMap(
             [
                 [ CURLINFO_RESPONSE_CODE, 200 ],
                 [ CURLINFO_CONTENT_TYPE, "text/plain" ],
                 [ null, [] ]
             ]
-        ));
+        );
         $curl->method("exec")->willReturn("test-body");
 
         $client = new Client(curl: $curl);
@@ -143,10 +125,7 @@ class ClientTestCase extends TestCase
         $this->assertInstanceOf(ResponseInterface::class, $response);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Client
-     * @test
-     */
+    #[Test]
     public function testGetSetupExceptionIfUnableToSetCurlOptions(): void
     {
         $curl = $this->createMock(Curl::class);
@@ -158,21 +137,18 @@ class ClientTestCase extends TestCase
         $client->get("https://www.google.ch");
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Client
-     * @test
-     */
+    #[Test]
     public function testGetNoResponseExceptionIfCurlExecReturnsFalse(): void
     {
         $curl = $this->createMock(Curl::class);
         $curl->method("setoptArray")->willReturn(true);
-        $curl->method("getinfo")->will($this->returnValueMap(
+        $curl->method("getinfo")->willReturnMap(
             [
                 [ CURLINFO_RESPONSE_CODE, 200 ],
                 [ CURLINFO_CONTENT_TYPE, "text/plain" ],
                 [ null, [] ]
             ]
-        ));
+        );
         $curl->method("exec")->willReturn(false);
 
         $client = new Client(curl: $curl);
@@ -181,25 +157,22 @@ class ClientTestCase extends TestCase
         $client->get("https://www.google.ch");
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Client
-     * @test
-     */
+    #[Test]
     public function testHttpHeaderOptionIsNotSetWithNoHeaders(): void
     {
         $curl = $this->createMock(Curl::class);
 
         // return true if key is set to value
         $curl->method('setoptArray')
-            ->will($this->returnCallback(fn ($options) => !isset($options[CURLOPT_HTTPHEADER])));
+            ->willReturnCallback(fn ($options) => !isset($options[CURLOPT_HTTPHEADER]));
 
-        $curl->method("getinfo")->will($this->returnValueMap(
+        $curl->method("getinfo")->willReturnMap(
             [
                 [ CURLINFO_RESPONSE_CODE, 200 ],
                 [ CURLINFO_CONTENT_TYPE, "text/plain" ],
                 [ null, [] ]
             ]
-        ));
+        );
         $curl->method("exec")->willReturn(true);
 
         $client = new Client(curl: $curl);
@@ -210,25 +183,22 @@ class ClientTestCase extends TestCase
         $this->assertInstanceOf(ResponseInterface::class, $response);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Client
-     * @test
-     */
+    #[Test]
     public function testCanSetCustomHeaders(): void
     {
         $curl = $this->createMock(Curl::class);
 
         // return true if key is set to value
         $curl->method('setoptArray')
-            ->will($this->returnCallback(fn ($options) => ($options[CURLOPT_HTTPHEADER]['key'] ?? null) === "value"));
+            ->willReturnCallback(fn ($options) => ($options[CURLOPT_HTTPHEADER]['key'] ?? null) === "value");
 
-        $curl->method("getinfo")->will($this->returnValueMap(
+        $curl->method("getinfo")->willReturnMap(
             [
                 [ CURLINFO_RESPONSE_CODE, 200 ],
                 [ CURLINFO_CONTENT_TYPE, "text/plain" ],
                 [ null, [] ]
             ]
-        ));
+        );
         $curl->method("exec")->willReturn(true);
 
         $client = new Client(curl: $curl);
@@ -242,25 +212,22 @@ class ClientTestCase extends TestCase
         $this->assertInstanceOf(ResponseInterface::class, $response);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Client
-     * @test
-     */
+    #[Test]
     public function testCookieOptionIsNotSetWithNoHeaders(): void
     {
         $curl = $this->createMock(Curl::class);
 
         // return true if key is set to value
         $curl->method('setoptArray')
-            ->will($this->returnCallback(fn ($options) => !isset($options[CURLOPT_COOKIE])));
+            ->willReturnCallback(fn ($options) => !isset($options[CURLOPT_COOKIE]));
 
-        $curl->method("getinfo")->will($this->returnValueMap(
+        $curl->method("getinfo")->willReturnMap(
             [
                 [ CURLINFO_RESPONSE_CODE, 200 ],
                 [ CURLINFO_CONTENT_TYPE, "text/plain" ],
                 [ null, [] ]
             ]
-        ));
+        );
         $curl->method("exec")->willReturn(true);
 
         $client = new Client(curl: $curl);
@@ -271,10 +238,7 @@ class ClientTestCase extends TestCase
         $this->assertInstanceOf(ResponseInterface::class, $response);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Client
-     * @test
-     */
+    #[Test]
     public function testCanSetCookies(): void
     {
         $cookieJar = $this->createMock(CookieJar::class);
@@ -286,15 +250,15 @@ class ClientTestCase extends TestCase
 
         // return true if key is set to value
         $curl->method('setoptArray')
-            ->will($this->returnCallback(fn ($options) => ($options[CURLOPT_COOKIE] ?? null) === "key=value;"));
+            ->willReturnCallback(fn ($options) => ($options[CURLOPT_COOKIE] ?? null) === "key=value;");
 
-        $curl->method("getinfo")->will($this->returnValueMap(
+        $curl->method("getinfo")->willReturnMap(
             [
                 [ CURLINFO_RESPONSE_CODE, 200 ],
                 [ CURLINFO_CONTENT_TYPE, "text/plain" ],
                 [ null, [] ]
             ]
-        ));
+        );
         $curl->method("exec")->willReturn(true);
 
         $client = new Client(cookieJar: $cookieJar, curl: $curl);
@@ -305,10 +269,7 @@ class ClientTestCase extends TestCase
         $this->assertInstanceOf(ResponseInterface::class, $response);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Client
-     * @test
-     */
+    #[Test]
     public function testCanSetRequestOnGetFunction(): void
     {
         $request = $this->createMock(Request::class);
@@ -317,15 +278,15 @@ class ClientTestCase extends TestCase
 
         // return true if key is set to value
         $curl->method('setoptArray')
-            ->will($this->returnCallback(fn ($options) => ($options[CURLOPT_SSL_VERIFYPEER] ?? null) === false));
+            ->willReturnCallback(fn ($options) => ($options[CURLOPT_SSL_VERIFYPEER] ?? null) === false);
 
-        $curl->method("getinfo")->will($this->returnValueMap(
+        $curl->method("getinfo")->willReturnMap(
             [
                 [ CURLINFO_RESPONSE_CODE, 200 ],
                 [ CURLINFO_CONTENT_TYPE, "text/plain" ],
                 [ null, [] ]
             ]
-        ));
+        );
         $curl->method("exec")->willReturn(true);
 
         $client = new Client(curl: $curl);

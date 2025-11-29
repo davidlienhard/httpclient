@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace DavidLienhard\HttpClient\Tests;
 
 use DavidLienhard\HttpClient\Helpers;
+use PHPUnit\Framework\Attributes\CoversMethod;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-class HelpersParseUrlTestCase extends TestCase
+#[CoversMethod(Helpers::class, "parseUrl") ]
+class HelpersParseUrlTest extends TestCase
 {
     private static function generateRandomString(int $length = 50) : string
     {
@@ -20,11 +23,7 @@ class HelpersParseUrlTestCase extends TestCase
         return $randomString;
     }
 
-
-    /**
-     * @covers DavidLienhard\HttpClient\Helpers::parseUrl()
-     * @test
-     */
+    #[Test]
     public function testUrlWithoutDataReturnsUrl(): void
     {
         for ($i = 0; $i < 10; $i++) {
@@ -34,11 +33,7 @@ class HelpersParseUrlTestCase extends TestCase
         }
     }
 
-
-    /**
-     * @covers DavidLienhard\HttpClient\Helpers::parseUrl()
-     * @test
-     */
+    #[Test]
     public function testCanAddSingleParameter(): void
     {
         $url = "https://test.com/";
@@ -47,11 +42,7 @@ class HelpersParseUrlTestCase extends TestCase
         $this->assertEquals("https://test.com/?param=value", Helpers::parseUrl($url, $data));
     }
 
-
-    /**
-     * @covers DavidLienhard\HttpClient\Helpers::parseUrl()
-     * @test
-     */
+    #[Test]
     public function testCanAddSingleParameterToUrlWithParameters(): void
     {
         $url = "https://test.com/?has=parameter";
@@ -60,11 +51,7 @@ class HelpersParseUrlTestCase extends TestCase
         $this->assertEquals("https://test.com/?has=parameter&param=value", Helpers::parseUrl($url, $data));
     }
 
-
-    /**
-     * @covers DavidLienhard\HttpClient\Helpers::parseUrl()
-     * @test
-     */
+    #[Test]
     public function testCanAddMultipleParameters(): void
     {
         $url = "https://test.com/";
