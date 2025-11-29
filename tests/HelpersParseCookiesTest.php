@@ -6,14 +6,14 @@ namespace DavidLienhard\HttpClient\Tests;
 
 use DavidLienhard\HttpClient\CookieJar;
 use DavidLienhard\HttpClient\Helpers;
+use PHPUnit\Framework\Attributes\CoversMethod;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-class HelpersParseCookiesTestCase extends TestCase
+#[CoversMethod(Helpers::class, "parseCookies") ]
+class HelpersParseCookiesTest extends TestCase
 {
-    /**
-     * @covers DavidLienhard\HttpClient\Helpers::parseCookies()
-     * @test
-     */
+    #[Test]
     public function testEmptyArrayReturnsEmptyCookieJar(): void
     {
         $jar = Helpers::parseCookies(new CookieJar, []);
@@ -22,10 +22,7 @@ class HelpersParseCookiesTestCase extends TestCase
     }
 
 
-    /**
-     * @covers DavidLienhard\HttpClient\Helpers::parseCookies()
-     * @test
-     */
+    #[Test]
     public function testArrayWithNoCookiesReturnsEmptyCookieJar(): void
     {
         $headers = [
@@ -39,10 +36,7 @@ class HelpersParseCookiesTestCase extends TestCase
     }
 
 
-    /**
-     * @covers DavidLienhard\HttpClient\Helpers::parseCookies()
-     * @test
-     */
+    #[Test]
     public function testArrayWithSingleCookieReturnsSingleCookie(): void
     {
         $headers = [
@@ -62,10 +56,7 @@ class HelpersParseCookiesTestCase extends TestCase
     }
 
 
-    /**
-     * @covers DavidLienhard\HttpClient\Helpers::parseCookies()
-     * @test
-     */
+    #[Test]
     public function testArrayWithMultipleCookiesReturnsMultipleCookies(): void
     {
         $headers = [

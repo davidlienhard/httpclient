@@ -6,14 +6,13 @@ namespace DavidLienhard\HttpClient\Tests;
 
 use DavidLienhard\HttpClient\Cookie;
 use DavidLienhard\HttpClient\CookieInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-class CookieTestCase extends TestCase
+#[CoversClass(Cookie::class)]
+class CookieTest extends TestCase
 {
-    /**
-     * @covers DavidLienhard\HttpClient\Cookie
-     * @test
-     */
     public function testCanBeCreated(): void
     {
         $cookie = new Cookie("name", "value");
@@ -22,70 +21,56 @@ class CookieTestCase extends TestCase
         $this->assertInstanceOf(CookieInterface::class, $cookie);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Cookie
-     * @test
-     */
+
+    #[Test]
     public function testCannotCreateWithoutArguments(): void
     {
         $this->expectException(\ArgumentCountError::class);
         new Cookie;
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Cookie
-     * @test
-     */
+
+    #[Test]
     public function testCannotCreateWithoutIntForName(): void
     {
         $this->expectException(\TypeError::class);
         new Cookie(1);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Cookie
-     * @test
-     */
+
+    #[Test]
     public function testCannotCreateWithoutBoolForName(): void
     {
         $this->expectException(\TypeError::class);
         new Cookie(true);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Cookie
-     * @test
-     */
+
+    #[Test]
     public function testCannotCreateWithoutValue(): void
     {
         $this->expectException(\ArgumentCountError::class);
         new Cookie("name");
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Cookie
-     * @test
-     */
+
+    #[Test]
     public function testCannotCreateWithoutIntForValue(): void
     {
         $this->expectException(\TypeError::class);
         new Cookie("name", 1);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Cookie
-     * @test
-     */
+
+    #[Test]
     public function testCannotCreateWithoutBoolForValue(): void
     {
         $this->expectException(\TypeError::class);
         new Cookie("name", true);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Cookie
-     * @test
-     */
+
+    #[Test]
     public function testCatGetCookieName(): void
     {
         $cookie = new Cookie("name", "value");
@@ -93,10 +78,8 @@ class CookieTestCase extends TestCase
         $this->assertEquals("name", $cookie->getName());
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Cookie
-     * @test
-     */
+
+    #[Test]
     public function testCatGetCookieValue(): void
     {
         $cookie = new Cookie("name", "value");

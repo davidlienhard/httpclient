@@ -8,9 +8,12 @@ use DavidLienhard\HttpClient\CookieJar;
 use DavidLienhard\HttpClient\CookieJarInterface;
 use DavidLienhard\HttpClient\Response;
 use DavidLienhard\HttpClient\ResponseInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-class ResponseTestCase extends TestCase
+#[CoversClass(Response::class)]
+class ResponseTest extends TestCase
 {
     private static function getDummyResponse() : ResponseInterface
     {
@@ -29,10 +32,7 @@ class ResponseTestCase extends TestCase
     }
 
 
-    /**
-     * @covers DavidLienhard\HttpClient\Response
-     * @test
-     */
+    #[Test]
     public function testCanBeCreated(): void
     {
         $response = self::getDummyResponse();
@@ -42,10 +42,7 @@ class ResponseTestCase extends TestCase
     }
 
 
-    /**
-     * @covers DavidLienhard\HttpClient\Response
-     * @test
-     */
+    #[Test]
     public function testCanGetHttpCode(): void
     {
         $response = self::getDummyResponse();
@@ -54,10 +51,7 @@ class ResponseTestCase extends TestCase
     }
 
 
-    /**
-     * @covers DavidLienhard\HttpClient\Response
-     * @test
-     */
+    #[Test]
     public function testCanGetContentType(): void
     {
         $response = self::getDummyResponse();
@@ -66,10 +60,7 @@ class ResponseTestCase extends TestCase
     }
 
 
-    /**
-     * @covers DavidLienhard\HttpClient\Response
-     * @test
-     */
+    #[Test]
     public function testCanGetInfo(): void
     {
         $response = self::getDummyResponse();
@@ -78,10 +69,7 @@ class ResponseTestCase extends TestCase
     }
 
 
-    /**
-     * @covers DavidLienhard\HttpClient\Response
-     * @test
-     */
+    #[Test]
     public function testCanGetResponseHeaders(): void
     {
         $response = self::getDummyResponse();
@@ -90,10 +78,7 @@ class ResponseTestCase extends TestCase
     }
 
 
-    /**
-     * @covers DavidLienhard\HttpClient\Response
-     * @test
-     */
+    #[Test]
     public function testCanGetCookieJar(): void
     {
         $response = self::getDummyResponse();
@@ -102,10 +87,7 @@ class ResponseTestCase extends TestCase
     }
 
 
-    /**
-     * @covers DavidLienhard\HttpClient\Response
-     * @test
-     */
+    #[Test]
     public function testCanGetBody(): void
     {
         $response = self::getDummyResponse();

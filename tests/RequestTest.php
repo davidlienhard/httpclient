@@ -6,14 +6,13 @@ namespace DavidLienhard\HttpClient\Tests;
 
 use DavidLienhard\HttpClient\Request;
 use DavidLienhard\HttpClient\RequestInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-class RequestTestCase extends TestCase
+#[CoversClass(Request::class)]
+class RequestTest extends TestCase
 {
-    /**
-     * @covers DavidLienhard\HttpClient\Request
-     * @test
-     */
     public function testCanBeCreated(): void
     {
         $request = new Request;
@@ -22,10 +21,8 @@ class RequestTestCase extends TestCase
         $this->assertInstanceOf(RequestInterface::class, $request);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Request
-     * @test
-     */
+
+    #[Test]
     public function testCanGetDefaultOptions(): void
     {
         $request = new Request;
@@ -38,10 +35,8 @@ class RequestTestCase extends TestCase
         $this->assertEquals($defaultOptions, $request->getOptions());
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Request
-     * @test
-     */
+
+    #[Test]
     public function testCanSetVerifySslPeerToBool(): void
     {
         $request = new Request;
@@ -55,10 +50,8 @@ class RequestTestCase extends TestCase
         $this->assertEquals(false, $request->getOptions()[CURLOPT_SSL_VERIFYPEER]);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Request
-     * @test
-     */
+
+    #[Test]
     public function testCanSetTimeoutToNull(): void
     {
         $request = new Request;
@@ -68,10 +61,8 @@ class RequestTestCase extends TestCase
         $this->assertArrayNotHasKey(CURLOPT_TIMEOUT, $request->getOptions());
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Request
-     * @test
-     */
+
+    #[Test]
     public function testCanSetTimeoutToInt(): void
     {
         $request = new Request;
@@ -84,10 +75,8 @@ class RequestTestCase extends TestCase
         }
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Request
-     * @test
-     */
+
+    #[Test]
     public function testCanSetConnectTimeoutToNull(): void
     {
         $request = new Request;
@@ -97,10 +86,8 @@ class RequestTestCase extends TestCase
         $this->assertArrayNotHasKey(CURLOPT_CONNECTTIMEOUT, $request->getOptions());
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Request
-     * @test
-     */
+
+    #[Test]
     public function testCanSetConnectTimeoutToInt(): void
     {
         $request = new Request;
@@ -113,10 +100,8 @@ class RequestTestCase extends TestCase
         }
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Request
-     * @test
-     */
+
+    #[Test]
     public function testCanSetWriteFunctionToNull(): void
     {
         $request = new Request;
@@ -128,10 +113,8 @@ class RequestTestCase extends TestCase
         $this->assertArrayNotHasKey(CURLOPT_WRITEFUNCTION, $options);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Request
-     * @test
-     */
+
+    #[Test]
     public function testCanSetWriteFunctionToClosure(): void
     {
         $request = new Request;
@@ -146,10 +129,8 @@ class RequestTestCase extends TestCase
         $this->assertEquals($closure, $options[CURLOPT_WRITEFUNCTION]);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Request
-     * @test
-     */
+
+    #[Test]
     public function testCanSetOutfileToNull(): void
     {
         $request = new Request;
@@ -161,10 +142,8 @@ class RequestTestCase extends TestCase
         $this->assertArrayNotHasKey(CURLOPT_FILE, $options);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Request
-     * @test
-     */
+
+    #[Test]
     public function testCannotSetOutfileToString(): void
     {
         $request = new Request;
@@ -173,10 +152,8 @@ class RequestTestCase extends TestCase
         $request->setOutfile("test");
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Request
-     * @test
-     */
+
+    #[Test]
     public function testCannotSetOutfileToResourceOtherThanStream(): void
     {
         $request = new Request;
@@ -185,10 +162,8 @@ class RequestTestCase extends TestCase
         $request->setOutfile(\curl_init());
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\Request
-     * @test
-     */
+
+    #[Test]
     public function testCanSetOutfileToFilehandle(): void
     {
         $request = new Request;

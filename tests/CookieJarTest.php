@@ -7,14 +7,14 @@ namespace DavidLienhard\HttpClient\Tests;
 use DavidLienhard\HttpClient\Cookie;
 use DavidLienhard\HttpClient\CookieJar;
 use DavidLienhard\HttpClient\CookieJarInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-class CookieJarTestCase extends TestCase
+#[CoversClass(CookieJar::class)]
+class CookieJarTest extends TestCase
 {
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+    #[Test]
     public function testCanBeCreated(): void
     {
         $jar = new CookieJar;
@@ -23,40 +23,29 @@ class CookieJarTestCase extends TestCase
         $this->assertInstanceOf(CookieJarInterface::class, $jar);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+    #[Test]
     public function testCannotBeCreatedWithString(): void
     {
         $this->expectException(\TypeError::class);
         new CookieJar("string");
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+    #[Test]
     public function testCannotBeCreatedWithInt(): void
     {
         $this->expectException(\TypeError::class);
         new CookieJar(1);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+    #[Test]
     public function testCannotBeCreatedWithBool(): void
     {
         $this->expectException(\TypeError::class);
         new CookieJar(true);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+
+    #[Test]
     public function testCanBeCreatedWithCookieAsArgument(): void
     {
         $cookie = $this->createMock(Cookie::class);
@@ -66,10 +55,8 @@ class CookieJarTestCase extends TestCase
         $this->assertInstanceOf(CookieJarInterface::class, $jar);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+
+    #[Test]
     public function testCanBeCreatedWithMultipleCookies(): void
     {
         $cookie = $this->createMock(Cookie::class);
@@ -79,10 +66,8 @@ class CookieJarTestCase extends TestCase
         $this->assertInstanceOf(CookieJarInterface::class, $jar);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+
+    #[Test]
     public function testCannotBeCreatedMixedData(): void
     {
         $cookie = $this->createMock(Cookie::class);
@@ -90,10 +75,8 @@ class CookieJarTestCase extends TestCase
         new CookieJar($cookie, $cookie, "test", 1, true);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+
+    #[Test]
     public function testCannotAddStringAsCookie(): void
     {
         $jar = new CookieJar;
@@ -101,10 +84,8 @@ class CookieJarTestCase extends TestCase
         $jar->addCookie("string");
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+
+    #[Test]
     public function testCannotAddIntAsCookie(): void
     {
         $jar = new CookieJar;
@@ -112,10 +93,8 @@ class CookieJarTestCase extends TestCase
         $jar->addCookie(1);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+
+    #[Test]
     public function testCannotAddBoolAsCookie(): void
     {
         $jar = new CookieJar;
@@ -123,10 +102,8 @@ class CookieJarTestCase extends TestCase
         $jar->addCookie(true);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+
+    #[Test]
     public function testCannotAddArrayAsCookie(): void
     {
         $jar = new CookieJar;
@@ -134,10 +111,8 @@ class CookieJarTestCase extends TestCase
         $jar->addCookie([ "string" ]);
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+
+    #[Test]
     public function testCanAddCookie(): void
     {
         $cookie = $this->createMock(Cookie::class);
@@ -147,10 +122,8 @@ class CookieJarTestCase extends TestCase
         $this->assertEquals(1, $jar->getCount());
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+
+    #[Test]
     public function testCanAddMultipleCookies(): void
     {
         $cookie = $this->createMock(Cookie::class);
@@ -160,20 +133,16 @@ class CookieJarTestCase extends TestCase
         $this->assertEquals(3, $jar->getCount());
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+
+    #[Test]
     public function testCanGetCookiesWithoutAnySet(): void
     {
         $jar = new CookieJar;
         $this->assertEquals([], $jar->getCookies());
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+
+    #[Test]
     public function testCanGetCookiesWithSetFromConstruct(): void
     {
         $cookie = $this->createMock(Cookie::class);
@@ -181,10 +150,8 @@ class CookieJarTestCase extends TestCase
         $this->assertEquals([ $cookie, $cookie, $cookie ], $jar->getCookies());
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+
+    #[Test]
     public function testCanGetCookiesWithSetFromAddFunction(): void
     {
         $cookie = $this->createMock(Cookie::class);
@@ -193,10 +160,8 @@ class CookieJarTestCase extends TestCase
         $this->assertEquals([ $cookie, $cookie, $cookie ], $jar->getCookies());
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+
+    #[Test]
     public function testCanGetCookiesWithSetFromConstructAndAddFunction(): void
     {
         $cookie = $this->createMock(Cookie::class);
@@ -205,10 +170,8 @@ class CookieJarTestCase extends TestCase
         $this->assertEquals([ $cookie, $cookie, $cookie, $cookie, $cookie, $cookie ], $jar->getCookies());
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+
+    #[Test]
     public function testCanGetCookieCountWithSetFromConstruct(): void
     {
         $cookie = $this->createMock(Cookie::class);
@@ -216,10 +179,8 @@ class CookieJarTestCase extends TestCase
         $this->assertEquals(3, $jar->getCount());
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+
+    #[Test]
     public function testCanGetCookieCountSetFromAddFunction(): void
     {
         $cookie = $this->createMock(Cookie::class);
@@ -228,10 +189,8 @@ class CookieJarTestCase extends TestCase
         $this->assertEquals(3, $jar->getCount());
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+
+    #[Test]
     public function testCanGetCookieCountSetFromConstructAndAddFunction(): void
     {
         $cookie = $this->createMock(Cookie::class);
@@ -240,20 +199,16 @@ class CookieJarTestCase extends TestCase
         $this->assertEquals(6, $jar->getCount());
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+
+    #[Test]
     public function testNoCookiesReturnEmptyString(): void
     {
         $jar = new CookieJar;
         $this->assertEquals("", $jar->getAsString());
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+
+    #[Test]
     public function testCanGetAsStringWithSingleCookie(): void
     {
         $cookie = $this->createMock(Cookie::class);
@@ -264,10 +219,8 @@ class CookieJarTestCase extends TestCase
         $this->assertEquals("name=value;", $jar->getAsString());
     }
 
-    /**
-     * @covers DavidLienhard\HttpClient\CookieJar
-     * @test
-     */
+
+    #[Test]
     public function testCanGetAsStringWithMultipleCookies(): void
     {
         $cookie1 = $this->createMock(Cookie::class);

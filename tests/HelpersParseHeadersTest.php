@@ -5,24 +5,21 @@ declare(strict_types=1);
 namespace DavidLienhard\HttpClient\Tests;
 
 use DavidLienhard\HttpClient\Helpers;
+use PHPUnit\Framework\Attributes\CoversMethod;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-class HelpersParseHeadersTestCase extends TestCase
+#[CoversMethod(Helpers::class, "parseHeaders") ]
+class HelpersParseHeadersTest extends TestCase
 {
-    /**
-     * @covers DavidLienhard\HttpClient\Helpers::parseHeaders()
-     * @test
-     */
+    #[Test]
     public function testEmptyStringReturnsEmptyArray(): void
     {
         $this->assertEquals([], Helpers::parseHeaders(""));
     }
 
 
-    /**
-     * @covers DavidLienhard\HttpClient\Helpers::parseHeaders()
-     * @test
-     */
+    #[Test]
     public function testCanParseHttpResponseCode(): void
     {
         $header = "HTTP/1.1 200 OK";
@@ -34,10 +31,7 @@ class HelpersParseHeadersTestCase extends TestCase
     }
 
 
-    /**
-     * @covers DavidLienhard\HttpClient\Helpers::parseHeaders()
-     * @test
-     */
+    #[Test]
     public function testCanParseSingleHeader(): void
     {
         $header = "Content-type: text/plain";
@@ -49,10 +43,7 @@ class HelpersParseHeadersTestCase extends TestCase
     }
 
 
-    /**
-     * @covers DavidLienhard\HttpClient\Helpers::parseHeaders()
-     * @test
-     */
+    #[Test]
     public function testCanParseMultipleHeaders(): void
     {
         $header = "HTTP/1.1 200 OK\n".
@@ -73,10 +64,7 @@ class HelpersParseHeadersTestCase extends TestCase
     }
 
 
-    /**
-     * @covers DavidLienhard\HttpClient\Helpers::parseHeaders()
-     * @test
-     */
+    #[Test]
     public function testCanParseLongHeadersOverMultipleLines(): void
     {
         $header = "X-Example: this is a very\n".
@@ -90,10 +78,7 @@ class HelpersParseHeadersTestCase extends TestCase
     }
 
 
-    /**
-     * @covers DavidLienhard\HttpClient\Helpers::parseHeaders()
-     * @test
-     */
+    #[Test]
     public function testCanParseHeaderThatExistsTwiceTimes(): void
     {
         $header = "X-Example: this header\n".
@@ -110,10 +95,7 @@ class HelpersParseHeadersTestCase extends TestCase
     }
 
 
-    /**
-     * @covers DavidLienhard\HttpClient\Helpers::parseHeaders()
-     * @test
-     */
+    #[Test]
     public function testCanParseHeaderThatExistsMultipleTimes(): void
     {
         $header = "X-Example: this header\n".
