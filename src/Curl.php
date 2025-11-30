@@ -82,7 +82,8 @@ class Curl
      */
     public function close() : void
     {
-        \curl_close($this->ch);
+        # we cannot close the handle, so we init a new connection
+        $this->init();
     }
 
     /**
